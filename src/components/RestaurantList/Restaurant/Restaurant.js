@@ -2,13 +2,13 @@ import React from 'react';
 import { StarRating } from '../../Rating/StarRating';
 import { RestaurantWrapper } from './Restaurant.styled';
 
-export const Restaurant = ({ rating }) => {
+export const Restaurant = ({ rating, restName, address }) => {
   return (
     <>
       <RestaurantWrapper p="36px" color="primary">
         <div className="name__location">
-          <h2>Avinach Fast Food</h2>
-          <p>Embakasi South</p>
+          <h2>{restName}</h2>
+          <p>{address}</p>
         </div>
         <StarRating value={rating} />
       </RestaurantWrapper>
