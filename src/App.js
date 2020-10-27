@@ -14,6 +14,7 @@ import {
 } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import { RestaurantList } from './components/RestaurantList/RestaurantList';
+import { FilterRating } from './components/FilterRating/FilterRating';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -50,19 +51,22 @@ function App() {
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
       <AppWrapper>
-        <MapContainer bg="primary" m="none" height="100vh">
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            zoom={15}
-            center={{ lat: location.latitude, lng: location.longitude }}
-            options={options}
-          >
-            <Marker
-              position={{ lat: location.latitude, lng: location.longitude }}
-            />
-          </GoogleMap>
-        </MapContainer>
-        <RestaurantList />
+        {location && (
+          <MapContainer bg="primary" m="none" height="100vh">
+            <FilterRating />
+            <GoogleMap
+              mapContainerStyle={mapContainerStyle}
+              zoom={15}
+              center={{ lat: location.latitude, lng: location.longitude }}
+              options={options}
+            >
+              <Marker
+                position={{ lat: location.latitude, lng: location.longitude }}
+              />
+            </GoogleMap>
+          </MapContainer>
+        )}
+        {location && <RestaurantList />}
       </AppWrapper>
     </ThemeProvider>
   );
