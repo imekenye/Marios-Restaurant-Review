@@ -1,0 +1,98 @@
+[
+   {
+      "restaurantName":"Avinach Fast Food",
+      "address":"Embakasi South",
+      "lat":48.8737815,
+      "long":2.3501649,
+      "ratings":[
+         {
+            "stars":3,
+            "comment":"Great! But not many veggie options."
+         },
+         {
+            "stars":4,
+            "comment":"My favorite restaurant!"
+         }
+      ]
+   },
+   {
+      "restaurantName":"Chomazone",
+      "address":"Imara Daima - Mombasa Rd, Nairobi",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+   {
+      "restaurantName":"Mc Fry's-Mombasa Road",
+      "address":"Vision Plaza, Mombasa Rd, Nairobi",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":2,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+   {
+      "restaurantName":"Kona Motomoto",
+      "address":"Off Road A, Makadara",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":4,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+   {
+      "restaurantName":"Red Garnet @ Panari",
+      "address":"Panari Sky Center,Mombasa Road, Panari",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":1,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   },
+   {
+      "restaurantName":"Eagles Steakhouse",
+      "address":"Ole Sereni Hotel,Mombasa Rd,",
+      "lat":48.8865035,
+      "long":2.3442197,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Tiny pizzeria next to Sacre Coeur!"
+         },
+         {
+            "stars":3,
+            "comment":"Meh, it was fine."
+         }
+      ]
+   }
+]
