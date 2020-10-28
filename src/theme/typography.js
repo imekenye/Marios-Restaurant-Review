@@ -13,4 +13,7 @@ const sizes = {
   xxxxl: '36px',
 };
 
-export const typography = {};
+export const typography = {
+  sizes,
+  fontFamilies
+};

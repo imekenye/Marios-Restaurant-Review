@@ -28,8 +28,7 @@ export const FilterRating = () => {
       }),
     x2.onChange((latest) => {
       setRateValue2(latest);
-    }),
-    []
+    },[x1,x2]) // eslint-disable-line react-hooks/exhaustive-deps
   );
   return (
     <FilterRatingWrapper>

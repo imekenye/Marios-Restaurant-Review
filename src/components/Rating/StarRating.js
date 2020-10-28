@@ -8,6 +8,8 @@ const getStar = (value) => {
       return 'halfStar.svg';
     case 100:
       return 'activeStar.svg';
+    default:
+      return 'inactiveStar.svg'
   }
 };
 
@@ -35,6 +37,8 @@ const getStars = (value) => {
       return [100, 100, 100, 100, 50];
     case 5:
       return [100, 100, 100, 100, 100];
+    default:
+      return [100,100,100,100,100]
   }
 };
 

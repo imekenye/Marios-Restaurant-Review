@@ -6,12 +6,7 @@ import { AppWrapper, GlobalStyle } from './theme/globalStyle';
 // custom hooks
 import { useCurrentLocation } from './hooks/useCurrentLocation';
 // goggle maps
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import mapStyles from './mapStyles';
 import { RestaurantList } from './components/RestaurantList/RestaurantList';
 import { FilterRating } from './components/FilterRating/FilterRating';
@@ -42,7 +37,7 @@ function App() {
   });
 
   // geolocation api hook
-  const { location, error } = useCurrentLocation(geolocationOptions);
+  const { location } = useCurrentLocation(geolocationOptions);
 
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
