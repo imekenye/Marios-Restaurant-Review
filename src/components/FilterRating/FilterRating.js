@@ -28,8 +28,9 @@ export const FilterRating = () => {
       }),
     x2.onChange((latest) => {
       setRateValue2(latest);
-    },[x1,x2]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [])
   );
+  console.log(rv);
   return (
     <FilterRatingWrapper>
       <FilterContainer bg="primary">

@@ -48,7 +48,7 @@ function App() {
       <AppWrapper>
         {location && (
           <MapContainer bg="primary" m="none" height="100vh">
-            <FilterRating />
+            {/* <FilterRating /> */}
             <GoogleMap
               mapContainerStyle={mapContainerStyle}
               zoom={15}
