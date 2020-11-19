@@ -1,3 +1,10 @@
 import styled from 'styled-components/macro';
 
-export const Container = styled.main``;
+export const Container = styled.main`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 1140px;
+  height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 78px;
+`;

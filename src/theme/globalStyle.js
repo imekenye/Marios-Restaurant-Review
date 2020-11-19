@@ -1,10 +1,25 @@
 import styled, { createGlobalStyle } from 'styled-components';
+// import Akkurrat from '../../public/fonts/Akkurat.ttf';
 
 export const GlobalStyle = createGlobalStyle`
+@font-face{
+  font-family: 'Akkurat';
+  src: local('Akkurat'),url(${'fonts/Akkurat.ttf'}) format('ttf');
+  font-style: normal;
+}
+@font-face{
+  font-family: 'AkkuratBold';
+  src: local('AkkuratBold'),url(${'fonts/Akkurat-Bold.ttf'}) format('ttf');
+  font-style: bold;
+}
+@font-face{
+  font-family: 'AkkuratLight';
+  src: local('AkkuratLight'),url(${'fonts/Akkurat-Light.ttf'}) format('ttf');
+}
 html {
     box-sizing: border-box;
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Akkurat', sans-serif;
   }
 
   *,
@@ -16,6 +31,7 @@ html {
   body {
     padding: 0;
     margin: 0;
+    background: #FAFAFA;
   }
 `;
 

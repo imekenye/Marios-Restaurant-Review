@@ -9,7 +9,7 @@ const getStar = (value) => {
     case 100:
       return 'activeStar.svg';
     default:
-      return 'inactiveStar.svg'
+      return 'inactiveStar.svg';
   }
 };
 
@@ -38,7 +38,7 @@ const getStars = (value) => {
     case 5:
       return [100, 100, 100, 100, 100];
     default:
-      return [100,100,100,100,100]
+      return [100, 100, 100, 100, 100];
   }
 };
 

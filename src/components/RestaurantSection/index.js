@@ -2,5 +2,5 @@ import React from 'react';
 import { Container } from './styles/restaurantSection';
 
 export default function RestaurantSection({ children, ...rest }) {
-  return <Container>{children}</Container>;
+  return <Container {...rest}>{children}</Container>;
 }

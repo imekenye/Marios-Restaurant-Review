@@ -1,7 +1,31 @@
 import styled from 'styled-components/macro';
 
-export const Container = styled.div``;
-export const Image = styled.img``;
-export const Title = styled.h2``;
-export const Location = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 22px;
+
+  .restaurant__image {
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+  }
+  .restaurant__details {
+    flex: 2;
+  }
+`;
+export const Image = styled.img`
+  object-fit: cover;
+  width: 100%;
+`;
+export const Title = styled.h2`
+  font-family: 'AkkuratBold', sans-serif;
+  margin: 0;
+  color: ${({ theme }) => theme.colors.primary};
+  font-smooth: auto;
+`;
+export const Location = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+`;
 export const Rating = styled.div``;
