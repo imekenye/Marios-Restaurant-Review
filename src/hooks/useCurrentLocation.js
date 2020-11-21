@@ -7,8 +7,8 @@ export default function useCurrentLocation(options = {}) {
   const [location, setLocation] = useState();
 
   // Success handler for geolocation's `getCurrentPosition` method
-  const handleSuccess = (position) => {
-    const { latitude, longitude } = position.coords;
+  const handleSuccess = async (position) => {
+    const { latitude, longitude } = await position.coords;
 
     setLocation({
       latitude,
