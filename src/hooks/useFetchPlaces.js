@@ -6,9 +6,6 @@ export default function useFetchPlaces() {
   const [restaurants, setRestaurants] = useState();
   const { location } = useCurrentLocation();
 
-  // const latitude = location.latitude;
-  // const longitude = location.longitude;
-
   const Places_url = location
     ? `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${
         location && location.latitude
