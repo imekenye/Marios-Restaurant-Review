@@ -21,6 +21,7 @@ export const Image = styled.img`
 `;
 export const Title = styled.h2`
   font-family: 'AkkuratBold', sans-serif;
+  font-size: 26px;
   margin: 0;
   color: ${({ theme }) => theme.colors.primary};
   font-smooth: auto;
@@ -28,4 +29,6 @@ export const Title = styled.h2`
 export const Location = styled.div`
   color: ${({ theme }) => theme.colors.text};
 `;
-export const Rating = styled.div``;
+export const Rating = styled.div`
+  padding-top: 16px;
+`;

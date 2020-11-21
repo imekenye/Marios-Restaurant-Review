@@ -13,8 +13,19 @@ import { defaultTheme } from './theme/defaultTheme';
 import { GlobalStyle } from './theme/globalStyle';
 // restaurant list (JSON)
 import restaurants from './restaurants.json';
+import StarRating from './components/StarRating';
+import { MapContainer } from './containers';
 
 export default function App() {
+  const getTotal = (val) => {
+    const total = [];
+    val.map((item) => total.push(item.stars));
+    const result = total.reduce(function (a, b) {
+      return a + b;
+    }, 0);
+    console.log(total);
+    return result;
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
@@ -27,7 +38,7 @@ export default function App() {
         </Filter>
       </Header>
       <Main>
-        <h1>My app</h1>
+        <MapContainer />
         <RestaurantSection>
           {restaurants &&
             restaurants.map((restaurant) => (
@@ -42,7 +53,12 @@ export default function App() {
                   <Restaurant.Location>
                     {restaurant.address}
                   </Restaurant.Location>
-                  <Restaurant.Rating></Restaurant.Rating>
+                  <Restaurant.Rating>
+                    <StarRating
+                      total={getTotal(restaurant.ratings)}
+                      length={restaurant.ratings.length}
+                    />
+                  </Restaurant.Rating>
                 </div>
               </Restaurant>
             ))}

@@ -1,18 +1,24 @@
 import React from 'react';
 import StarIcon from '../StarIcon';
 
-export default function StarRating({ total, length }) {
+export default function StarRating({ total = 10, length = 3 }) {
   const getNoOfStars = () => {
-    const average = Math.Round(total / length);
-
-    const active = average;
+    const active = Math.round(`${total}` / `${length}`);
+    const tot = { total };
     const inActive = 5 - active;
-
-    const total = [];
-    for (i = 0; i < active; i++) {
-      total.push(i);
+    const stri = 'stringgg!!ffiuc';
+    const starState = [];
+    for (let i = 0; i < active; i++) {
+      starState.push('active');
     }
-    const activeStars = total.map((star) => <StarIcon />);
+    for (let i = 0; i < inActive; i++) {
+      starState.push('inActive');
+    }
+    const stars = starState.map((star) =>
+      star === 'active' ? <StarIcon /> : <StarIcon fill="#A2A1A1" />
+    );
+    // console.log(starState, tot);
+    return stars;
   };
-  return <div></div>;
+  return <>{getNoOfStars()}</>;
 }
