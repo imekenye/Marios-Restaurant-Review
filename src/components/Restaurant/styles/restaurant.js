@@ -7,7 +7,8 @@ export const Container = styled.div`
   padding-bottom: 22px;
 
   .restaurant__image {
-    height: 100%;
+    height: 96px;
+    width: 100%;
     flex: 1;
     overflow: hidden;
   }
@@ -18,6 +19,7 @@ export const Container = styled.div`
 export const Image = styled.img`
   object-fit: cover;
   width: 100%;
+  height: 100%;
 `;
 export const Title = styled.h2`
   font-family: 'AkkuratBold', sans-serif;

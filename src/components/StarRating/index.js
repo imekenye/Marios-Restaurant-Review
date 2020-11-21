@@ -1,12 +1,13 @@
 import React from 'react';
 import StarIcon from '../StarIcon';
 
-export default function StarRating({ total = 10, length = 3 }) {
+export default function StarRating({ total = 5 }) {
   const getNoOfStars = () => {
-    const active = Math.round(`${total}` / `${length}`);
-    const tot = { total };
-    const inActive = 5 - active;
-    const stri = 'stringgg!!ffiuc';
+    const active = Math.round(total);
+
+    // const tot = { total };
+    const inActive = total - active;
+
     const starState = [];
     for (let i = 0; i < active; i++) {
       starState.push('active');
@@ -18,6 +19,7 @@ export default function StarRating({ total = 10, length = 3 }) {
       star === 'active' ? <StarIcon /> : <StarIcon fill="#A2A1A1" />
     );
     // console.log(starState, tot);
+    console.log(stars);
     return stars;
   };
   return <>{getNoOfStars()}</>;

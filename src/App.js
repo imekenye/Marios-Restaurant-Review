@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // components
 import {
   Filter,
@@ -15,17 +15,20 @@ import { GlobalStyle } from './theme/globalStyle';
 import restaurants from './restaurants.json';
 import StarRating from './components/StarRating';
 import { MapContainer } from './containers';
+import { useFetchPlaces } from './hooks';
 
 export default function App() {
-  const getTotal = (val) => {
-    const total = [];
-    val.map((item) => total.push(item.stars));
-    const result = total.reduce(function (a, b) {
-      return a + b;
-    }, 0);
-    console.log(total);
-    return result;
-  };
+  // const getTotal = (val) => {
+  //   const total = [];
+  //   val.map((item) => total.push(item.stars));
+  //   const result = total.reduce(function (a, b) {
+  //     return a + b;
+  //   }, 0);
+  //   console.log(total);
+  //   return result;
+  // };
+  const { restaurants } = useFetchPlaces();
+  console.log(restaurants);
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
@@ -41,23 +44,33 @@ export default function App() {
         <MapContainer />
         <RestaurantSection>
           {restaurants &&
-            restaurants.map((restaurant) => (
+            restaurants.slice(0, 6).map((restaurant) => (
               <Restaurant>
                 <div className="restaurant__image">
-                  <Restaurant.Image src={restaurant.image} />
+                  {restaurant.photos ? (
+                    <Restaurant.Image
+                      src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${restaurant.photos[0].photo_reference}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`}
+                    />
+                  ) : (
+                    // <Restaurant.Image src="./assets/mariosdefault.png" />
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        fontSize: '12px',
+                        color: 'grey',
+                      }}
+                    >
+                      Image Unavailable
+                    </div>
+                  )}
                 </div>
                 <div className="restaurant__details">
-                  <Restaurant.Title>
-                    {restaurant.restaurantName}
-                  </Restaurant.Title>
+                  <Restaurant.Title>{restaurant.name}</Restaurant.Title>
                   <Restaurant.Location>
-                    {restaurant.address}
+                    {restaurant.vicinity}
                   </Restaurant.Location>
                   <Restaurant.Rating>
-                    <StarRating
-                      total={getTotal(restaurant.ratings)}
-                      length={restaurant.ratings.length}
-                    />
+                    <StarRating total={restaurant.rating} />
                   </Restaurant.Rating>
                 </div>
               </Restaurant>

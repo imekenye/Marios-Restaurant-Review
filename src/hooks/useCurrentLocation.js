@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useCurrentLocation = (options = {}) => {
+export default function useCurrentLocation(options = {}) {
   // store error message in state
   const [error, setError] = useState();
   // store location in state
@@ -33,7 +33,7 @@ export const useCurrentLocation = (options = {}) => {
       handleError,
       options
     );
-  }, [options]);
+  }, [options, location]);
 
   return { location, error };
-};
+}
