@@ -26,7 +26,7 @@ const geolocationOptions = {
   timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
 };
 
-const Places_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyBPxkRp-CqFSs5hVW4TdAZICPdwWZLvGFI'
+const Places_url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 
 export default function MapContainer() {
   const { isLoaded, loadError } = useLoadScript({
