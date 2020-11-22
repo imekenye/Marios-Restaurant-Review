@@ -37,7 +37,7 @@ export default function App() {
         <Header.Title>Find and add restaurants near you.</Header.Title>
         <Filter>
           <Filter.Title>Filter by rating</Filter.Title>
-          <Filter.Icon src={'filter.svg'} />
+          <Filter.Icon src={'filterIcon.svg'} />
         </Filter>
       </Header>
       <Main>
