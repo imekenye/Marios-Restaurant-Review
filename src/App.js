@@ -1,51 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // components
-import {
-  Filter,
-  Header,
-  Main,
-  Restaurant,
-  RestaurantSection,
-} from './components';
+import { Main, Restaurant, RestaurantSection } from './components';
 // theme & global styles
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme/defaultTheme';
 import { GlobalStyle } from './theme/globalStyle';
 // restaurant list (JSON)
-import restaurants from './restaurants.json';
+// import restaurants from './restaurants.json';
 import StarRating from './components/StarRating';
-import { MapContainer } from './containers';
+import { HeaderContainer, MapContainer } from './containers';
 import { useFetchPlaces } from './hooks';
 
 export default function App() {
-  // const getTotal = (val) => {
-  //   const total = [];
-  //   val.map((item) => total.push(item.stars));
-  //   const result = total.reduce(function (a, b) {
-  //     return a + b;
-  //   }, 0);
-  //   console.log(total);
-  //   return result;
-  // };
-  const { restaurants } = useFetchPlaces();
+  const { restaurants, loading } = useFetchPlaces();
+
   console.log(restaurants);
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <Header>
-        <Header.Logo src={'logo.svg'} />
-        <Header.Title>Find and add restaurants near you.</Header.Title>
-        <Filter>
-          <Filter.Title>Filter by rating</Filter.Title>
-          <Filter.Icon src={'filterIcon.svg'} />
-        </Filter>
-      </Header>
+      <HeaderContainer />
       <Main>
-        <MapContainer />
+        <MapContainer restaurants={restaurants} />
         <RestaurantSection>
+          {loading && 'Loading restaurants....'}
           {restaurants &&
-            restaurants.slice(0, 6).map((restaurant) => (
-              <Restaurant>
+            restaurants.slice(0, 6).map((restaurant, idx) => (
+              <Restaurant key={idx}>
                 <div className="restaurant__image">
                   {restaurant.photos ? (
                     <Restaurant.Image
