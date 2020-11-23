@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Map } from '../components';
 // custom hooks
-import { useCurrentLocation, useFetchPlaces } from '../hooks';
+import { useCurrentLocation } from '../hooks';
 
 // google maps
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
@@ -26,7 +26,7 @@ const geolocationOptions = {
   timeout: 1000 * 60 * 1, // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
 };
 
-export default function MapContainer() {
+export default function MapContainer({ restaurants }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -34,9 +34,7 @@ export default function MapContainer() {
 
   // custom hooks
   const { location } = useCurrentLocation(geolocationOptions);
-  const { restaurants } = useFetchPlaces();
 
-  console.log(restaurants);
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
@@ -61,8 +59,9 @@ export default function MapContainer() {
             {restaurants &&
               restaurants
                 // .slice(0, 6)
-                .map((restaurant) => (
+                .map((restaurant, idx) => (
                   <Marker
+                    key={idx}
                     position={{
                       lat: restaurant.geometry.location.lat,
                       lng: restaurant.geometry.location.lng,
