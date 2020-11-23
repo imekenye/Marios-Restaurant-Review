@@ -19,7 +19,7 @@ export default function StarRating({ total = 5 }) {
       star === 'active' ? <StarIcon /> : <StarIcon fill="#A2A1A1" />
     );
     // console.log(starState, tot);
-    console.log(stars);
+    // console.log(stars);
     return stars;
   };
   return <>{getNoOfStars()}</>;
