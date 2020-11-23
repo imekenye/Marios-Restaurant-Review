@@ -7,4 +7,6 @@ export const Container = styled.div`
 export const Title = styled.div`
   margin-right: 8px;
 `;
-export const Icon = styled.img``;
+export const Icon = styled.img`
+  cursor: pointer;
+`;
