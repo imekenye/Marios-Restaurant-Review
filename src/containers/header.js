@@ -6,18 +6,9 @@ import { optionsContext } from '../contexts/optionsContext';
 export default function HeaderContainer() {
   const [isOpen, setIsOpen] = useState(false);
 
-  //   const ratingOptions = [
-  //     { label: '1', value: '1', checked: false },
-  //     { label: '2', value: '2', checked: true },
-  //     { label: '3', value: '3', checked: false },
-  //     { label: '4', value: '4', checked: false },
-  //     { label: '5', value: '5', checked: false },
-  //   ];
-
   const ratingOptions = useContext(optionsContext);
-  //   console.log(myoptions);
-
   const [options, setOptions] = useState(ratingOptions);
+
   return (
     <Header>
       <Header.Logo src={'logo.svg'} />
