@@ -1,26 +1,20 @@
 import React from 'react';
+import HalfStar from '../HalfStar';
 import StarIcon from '../StarIcon';
 
-export default function StarRating({ total = 5 }) {
+export default function StarRating({ total }) {
   const getNoOfStars = () => {
-    const active = Math.round(total);
-
-    // const tot = { total };
-    const inActive = total - active;
-
-    const starState = [];
-    for (let i = 0; i < active; i++) {
-      starState.push('active');
-    }
-    for (let i = 0; i < inActive; i++) {
-      starState.push('inActive');
-    }
-    const stars = starState.map((star) =>
-      star === 'active' ? <StarIcon /> : <StarIcon fill="#A2A1A1" />
+    const selected = total;
+    const totalStars = 5;
+    return [...Array(totalStars)].map((el, i) =>
+      i < selected && i + 1 > selected ? (
+        <HalfStar />
+      ) : i < selected ? (
+        <StarIcon />
+      ) : (
+        <StarIcon fill="#A2A1A1" />
+      )
     );
-    // console.log(starState, tot);
-    // console.log(stars);
-    return stars;
   };
   return <>{getNoOfStars()}</>;
 }
