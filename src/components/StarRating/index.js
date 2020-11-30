@@ -8,11 +8,11 @@ export default function StarRating({ total }) {
     const totalStars = 5;
     return [...Array(totalStars)].map((el, i) =>
       i < selected && i + 1 > selected ? (
-        <HalfStar />
+        <HalfStar key={i} />
       ) : i < selected ? (
-        <StarIcon />
+        <StarIcon key={i} />
       ) : (
-        <StarIcon fill="#A2A1A1" />
+        <StarIcon key={i} fill="#A2A1A1" />
       )
     );
   };
