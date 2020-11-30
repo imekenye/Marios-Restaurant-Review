@@ -10,13 +10,13 @@ export default function HalfStar() {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0)">
+        <g clipPath="url(#clip0)">
           <rect
             width="16"
             height="16"
             rx="4"
             fill="#454444"
-            fill-opacity="0.2"
+            fillOpacity="0.2"
           />
           <path d="M0 17.5V0H8V17.5H0Z" fill="#454444" />
           <path
