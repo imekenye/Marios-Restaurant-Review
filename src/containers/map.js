@@ -2,9 +2,15 @@ import React, { useContext } from 'react';
 import { Map } from '../components';
 
 // google maps
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from '@react-google-maps/api';
 import mapStyles from '../mapStyles';
 import PlacesContext from '../contexts/places-context';
+import { Link, useHistory } from 'react-router-dom';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -25,7 +31,8 @@ export default function MapContainer() {
   });
 
   // global context
-  const { places, latitude, longitude } = useContext(PlacesContext);
+  const { places, latitude, longitude, getReviews } = useContext(PlacesContext);
+  const history = useHistory();
 
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
@@ -49,14 +56,20 @@ export default function MapContainer() {
               places
                 // .slice(0, 6)
                 .map((restaurant, idx) => (
-                  <Marker
-                    key={idx}
-                    position={{
-                      lat: restaurant.geometry.location.lat,
-                      lng: restaurant.geometry.location.lng,
-                    }}
-                    icon="marker.svg"
-                  />
+                  <>
+                    <Marker
+                      key={idx}
+                      onClick={() => {
+                        getReviews(restaurant.place_id);
+                        history.push('/reviews');
+                      }}
+                      position={{
+                        lat: restaurant.geometry.location.lat,
+                        lng: restaurant.geometry.location.lng,
+                      }}
+                      icon="marker.svg"
+                    />
+                  </>
                 ))}
           </GoogleMap>
         }

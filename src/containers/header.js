@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Filter, FilterInput, Header } from '../components';
 import CheckBox from '../components/CheckBox';
 import PlacesContext from '../contexts/places-context';
@@ -47,7 +48,9 @@ export default function HeaderContainer() {
 
   return (
     <Header>
-      <Header.Logo src={'logo.svg'} />
+      <Link to="/">
+        <Header.Logo src={'logo.svg'} />
+      </Link>
       <Header.Title>Find and add restaurants near you.</Header.Title>
       <Filter>
         <Filter.Title>Filter by rating</Filter.Title>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // theme & global styles
 import { ThemeProvider } from 'styled-components';
@@ -10,8 +11,11 @@ export default function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <HeaderContainer />
-      <MainContainer />
+
+      <Router>
+        <HeaderContainer />
+        <MainContainer />
+      </Router>
     </ThemeProvider>
   );
 }
