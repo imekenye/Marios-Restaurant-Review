@@ -1,4 +1,10 @@
-import { FILTER_PLACES, GET_DATA, GET_LOCATION, ERROR } from './places-actions';
+import {
+  FILTER_PLACES,
+  GET_DATA,
+  GET_REVIEWS,
+  GET_LOCATION,
+  ERROR,
+} from './places-actions';
 
 function placeReducer(state, action) {
   switch (action.type) {
@@ -14,6 +20,11 @@ function placeReducer(state, action) {
         ...state,
         latitude: action.payload.latitude,
         longitude: action.payload.longitude,
+      };
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload.reviews,
       };
     case FILTER_PLACES:
       return {
