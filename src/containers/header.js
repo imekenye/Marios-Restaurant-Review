@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Filter, FilterInput, Header } from '../components';
 import CheckBox from '../components/CheckBox';
+import PlacesContext from '../contexts/places-context';
 
 const ratingOptions = [
   { label: '1', value: '1', checked: false },
@@ -10,9 +11,10 @@ const ratingOptions = [
   { label: '5', value: '5', checked: false },
 ];
 
-export default function HeaderContainer({ data, setFilteredPlaces }) {
+export default function HeaderContainer() {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState(ratingOptions);
+  const { places, filterPlaces } = useContext(PlacesContext);
 
   const handleCheckBox = (e, idx, option) => {
     const newOptions = [...options];
@@ -30,13 +32,14 @@ export default function HeaderContainer({ data, setFilteredPlaces }) {
       return option.checked ? selected.push(parseInt(option.value)) : null;
     });
     selected.map((select) => {
-      const filtered = data.filter((el) => {
+      const filtered = places.filter((el) => {
         let floorRating = Math.floor(el.rating);
         return el.rating == select || floorRating == select;
       });
       filteredResults.push(...filtered);
     });
-    setFilteredPlaces(filteredResults);
+    // setFilteredPlaces(filteredResults);
+    filterPlaces(filteredResults);
     setIsOpen(false);
     // console.log(filteredResults);
     // console.log(selected);
@@ -62,7 +65,10 @@ export default function HeaderContainer({ data, setFilteredPlaces }) {
                   type="checkbox"
                   value={option.value}
                   checked={option.checked}
-                  onChange={(e) => handleCheckBox(e, idx, option)}
+                  onChange={(e) => {
+                    handleCheckBox(e, idx, option);
+                    console.log(e);
+                  }}
                 />
                 <CheckBox checked={option.checked} />
                 <span style={{ marginLeft: '8px' }}>{option.label}</span>
