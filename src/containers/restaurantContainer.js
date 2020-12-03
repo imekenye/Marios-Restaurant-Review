@@ -6,7 +6,6 @@ import PlacesContext from '../contexts/places-context';
 
 export default function RestaurantContainer() {
   const { places, getReviews, reviews, filtered } = useContext(PlacesContext);
-  console.log(reviews);
   return (
     <>
       {filtered.length !== 0 || filtered.length == 'undefined'
@@ -14,7 +13,14 @@ export default function RestaurantContainer() {
           filtered.slice(0, 6).map((restaurant, idx) => (
             <Restaurant
               key={restaurant.place_id}
-              onClick={() => getReviews(restaurant.places_id)}
+              onClick={() => {
+                console.log(
+                  reviews.filter(
+                    (review) => review.place_id === restaurant.place_id
+                  )
+                );
+                getReviews(restaurant.places_id);
+              }}
             >
               <div className="restaurant__image">
                 {/* {restaurant.photos ? (
@@ -39,7 +45,6 @@ export default function RestaurantContainer() {
                 <Link to="/reviews">
                   <Restaurant.Title
                     onClick={() => {
-                      console.log('clicked!!', restaurant.place_id);
                       getReviews(restaurant.place_id);
                     }}
                   >
@@ -75,7 +80,6 @@ export default function RestaurantContainer() {
                 <Link to="/reviews">
                   <Restaurant.Title
                     onClick={() => {
-                      console.log('clicked!!', restaurant.place_id);
                       getReviews(restaurant.place_id);
                     }}
                   >

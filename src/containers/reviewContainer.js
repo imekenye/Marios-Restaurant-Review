@@ -8,18 +8,23 @@ export default function ReviewContainer() {
   return (
     <>
       <Review>
-        <Review.Header>
-          <Restaurant.Title>{reviews.name}</Restaurant.Title>
-          <Restaurant.Location>{reviews.formatted_address}</Restaurant.Location>
-          <Restaurant.Rating>
-            <StarRating total={reviews.rating} />
-          </Restaurant.Rating>
-          <Review.Button>Add Review</Review.Button>
-        </Review.Header>
-        {/* {reviews.reviews === 'undefined' && } */}
-        {console.log(reviews.reviews)}
+        {reviews && (
+          <>
+            <Review.Header>
+              <Restaurant.Title>{reviews.name}</Restaurant.Title>
+              <Restaurant.Location>
+                {reviews.formatted_address}
+              </Restaurant.Location>
+              <Restaurant.Rating>
+                <StarRating total={reviews.rating} />
+              </Restaurant.Rating>
+              <Review.Button>Add Review</Review.Button>
+            </Review.Header>
+          </>
+        )}
+
         <Review.Body>
-          {reviews.reviews &&
+          {reviews.reviews ? (
             reviews.reviews.map((review) => (
               <>
                 <Review.Title>{review.author_name}</Review.Title>
@@ -28,7 +33,12 @@ export default function ReviewContainer() {
                 </Review.Rating>
                 <Review.Text>{review.text}</Review.Text>
               </>
-            ))}
+            ))
+          ) : (
+            <>
+              <Review.Text>There are no Reviews yet!</Review.Text>
+            </>
+          )}
         </Review.Body>
       </Review>
     </>

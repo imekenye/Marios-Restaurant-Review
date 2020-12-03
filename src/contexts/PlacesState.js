@@ -3,10 +3,13 @@ import axios from 'axios';
 import PlacesContext from './places-context';
 import placesReducer from './places-reducer';
 
+import Localbase from 'localbase';
+
 import {
   GET_LOCATION,
   GET_DATA,
   GET_REVIEWS,
+  GET_REVIEW,
   ERROR,
   FILTER_PLACES,
 } from './places-actions';
@@ -24,34 +27,66 @@ const PlacesState = ({ children }) => {
 
   const [state, dispatch] = useReducer(placesReducer, intialState);
 
-  useEffect(() => {
-    const cancelToken = axios.CancelToken.source();
-    let mounted = true;
-    if (localStorage.getItem('places') === null) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let { latitude, longitude } = position.coords;
-        axios
-          .get(
-            `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`,
-            { cancelToken: cancelToken.token }
-          )
-          .then((res) => {
-            console.log('calling api!!');
-            console.log(res.data);
-            localStorage.setItem('places', JSON.stringify(res.data.results));
+  let db = new Localbase('places');
 
-            const placesData = JSON.parse(localStorage.getItem('places'));
-            dispatch({ type: GET_DATA, payload: { places: placesData } });
-            dispatch({
-              type: GET_LOCATION,
-              payload: { latitude: latitude, longitude: longitude },
-            });
-          })
-          .catch((err) => {
-            dispatch({ type: ERROR, payload: { error: err } });
+  const fetchApiData = async () => {
+    // check if indexDB database exist
+
+    const dbName = 'places';
+    const databases = await window.indexedDB.databases();
+    const isExisting = databases.map((db) => db.name).includes(dbName);
+    if (!isExisting) {
+      // if indexDB database does not exist....
+
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        let { latitude, longitude } = position.coords;
+
+        const response = await axios.get(
+          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+        );
+
+        // Get reviews via place_id field
+
+        response.data.results.map(async (result) => {
+          const response2 = await axios.get(
+            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${result.place_id}&fields=place_id,name,rating,reviews,formatted_address&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+          );
+
+          // create reviews indexDB database table
+
+          db.collection('reviews').add(
+            response2.data.result,
+            response2.data.result.place_id
+          );
+        });
+
+        // get places indexDB database table
+
+        db.collection('places')
+          .get()
+          .then((review) => {
+            dispatch({ type: GET_REVIEWS, payload: { reviews: review } });
           });
+
+        try {
+          // create places indexDB database table
+
+          response.data.results.map((result) =>
+            db.collection('places').add(result)
+          );
+          dispatch({
+            type: GET_LOCATION,
+            payload: { latitude: latitude, longitude: longitude },
+          });
+          // localStorage.setItem('places', JSON.stringify(res.data.results));
+          //  const placesData = JSON.parse(localStorage.getItem('places'));
+        } catch (error) {
+          dispatch({ type: ERROR, payload: { error: error } });
+        }
       });
-    } else if (mounted) {
+    } else {
+      // if database is present...
+
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
 
@@ -60,13 +95,32 @@ const PlacesState = ({ children }) => {
           payload: { latitude: latitude, longitude: longitude },
         });
       });
-      const placesData = JSON.parse(localStorage.getItem('places'));
-      dispatch({ type: GET_DATA, payload: { places: placesData } });
+
+      const data = await db
+        .collection('places')
+        .get()
+        .then((place) => {
+          return place;
+        });
+      // const placesData = JSON.parse(localStorage.getItem('places'));
+      dispatch({ type: GET_DATA, payload: { places: data } });
+
+      db.collection('reviews')
+        .get()
+        .then((review) => {
+          dispatch({ type: GET_REVIEWS, payload: { reviews: review } });
+        });
     }
-    return () => {
-      cancelToken.cancel();
-      mounted = false;
-    };
+
+    db.collection('places')
+      .get()
+      .then((place) => {
+        dispatch({ type: GET_DATA, payload: { places: place } });
+      });
+  };
+
+  useEffect(() => {
+    fetchApiData();
   }, []);
 
   //   filter places
@@ -75,14 +129,12 @@ const PlacesState = ({ children }) => {
   };
   // get reviews
   const getReviews = (id) => {
-    axios
-      .get(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${id}&fields=name,rating,reviews,formatted_address&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
-      )
-      .then((res) =>
-        dispatch({ type: GET_REVIEWS, payload: { reviews: res.data.result } })
-      );
-    console.log('clicked!!!!');
+    db.collection('reviews')
+      .doc(id)
+      .get()
+      .then((document) => {
+        dispatch({ type: GET_REVIEW, payload: { reviews: document, id: id } });
+      });
   };
 
   return (

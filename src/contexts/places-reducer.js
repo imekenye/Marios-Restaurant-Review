@@ -1,6 +1,7 @@
 import {
   FILTER_PLACES,
   GET_DATA,
+  GET_REVIEW,
   GET_REVIEWS,
   GET_LOCATION,
   ERROR,
@@ -22,6 +23,11 @@ function placeReducer(state, action) {
         longitude: action.payload.longitude,
       };
     case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload.reviews,
+      };
+    case GET_REVIEW:
       return {
         ...state,
         reviews: action.payload.reviews,

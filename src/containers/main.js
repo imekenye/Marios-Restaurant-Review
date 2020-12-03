@@ -9,8 +9,6 @@ import RestaurantContainer from './restaurantContainer';
 import ReviewContainer from './reviewContainer';
 
 export default function MainContainer() {
-  const { places, filtered, loading } = useContext(PlacesContext);
-
   return (
     <>
       <Main>
