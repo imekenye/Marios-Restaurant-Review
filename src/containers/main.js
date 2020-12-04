@@ -7,6 +7,7 @@ import { Main, RestaurantSection } from '../components';
 import PlacesContext from '../contexts/places-context';
 import RestaurantContainer from './restaurantContainer';
 import ReviewContainer from './reviewContainer';
+import ReviewFormContainer from './reviewFormContainer';
 
 export default function MainContainer() {
   return (
@@ -18,8 +19,11 @@ export default function MainContainer() {
             <Route exact path="/">
               <RestaurantContainer />
             </Route>
-            <Route path="/reviews">
+            <Route path="/reviews/:id">
               <ReviewContainer />
+            </Route>
+            <Route path="/reviewform/:id">
+              <ReviewFormContainer />
             </Route>
           </Switch>
         </RestaurantSection>
