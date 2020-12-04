@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Review, Restaurant } from '../components';
 import StarRating from '../components/StarRating';
 import PlacesContext from '../contexts/places-context';
 
 export default function ReviewContainer() {
-  const { reviews } = useContext(PlacesContext);
+  const { reviews, getReview } = useContext(PlacesContext);
+
   return (
     <>
       <Review>
@@ -18,7 +20,9 @@ export default function ReviewContainer() {
               <Restaurant.Rating>
                 <StarRating total={reviews.rating} />
               </Restaurant.Rating>
-              <Review.Button>Add Review</Review.Button>
+              <Review.Button>
+                <Link to={`/reviewform/${reviews.place_id}`}>Add Review</Link>
+              </Review.Button>
             </Review.Header>
           </>
         )}

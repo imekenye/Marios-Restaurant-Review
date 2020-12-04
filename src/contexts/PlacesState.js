@@ -147,6 +147,7 @@ const PlacesState = ({ children }) => {
         latitude: state.latitude,
         longitude: state.longitude,
         filtered: state.filtered,
+        db,
         filterPlaces,
         getReviews,
       }}

@@ -29,8 +29,8 @@ ReviewForm.LastName = function ReviewFormLastName({ ...rest }) {
   return <LastName {...rest} />;
 };
 
-ReviewForm.Review = function ReviewFormReview({ ...rest }) {
-  return <Review {...rest} />;
+ReviewForm.Review = function ReviewFormReview({ children, ...rest }) {
+  return <Review {...rest}>{children}</Review>;
 };
 
 ReviewForm.Button = function ReviewFormButton({ children, ...rest }) {
