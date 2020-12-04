@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: absolute;
   right: 70px;
   top: 92px;
-  width: 172px;
+
   /* height: 192px; */
   background: #fff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);

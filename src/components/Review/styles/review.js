@@ -19,6 +19,10 @@ export const Button = styled.button`
   color: #454444;
   background: #f5d8bf;
   margin-top: 16px;
+
+  a {
+    text-decoration: none;
+  }
 `;
 export const Body = styled.div`
   padding-top: 150px;
