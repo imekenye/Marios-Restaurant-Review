@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Filter, FilterInput, Header } from '../components';
 import CheckBox from '../components/CheckBox';
+import StarRating from '../components/StarRating';
 import PlacesContext from '../contexts/places-context';
 
 const ratingOptions = [
@@ -74,7 +75,8 @@ export default function HeaderContainer() {
                   }}
                 />
                 <CheckBox checked={option.checked} />
-                <span style={{ marginLeft: '8px' }}>{option.label}</span>
+                <span style={{ margin: '0 8px' }}>{option.label}</span>
+                <StarRating total={idx + 1} disable={true} />
               </FilterInput.CheckboxLabel>
             </div>
           ))}
