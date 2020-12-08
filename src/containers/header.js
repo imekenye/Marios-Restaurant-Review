@@ -4,6 +4,8 @@ import { Filter, FilterInput, Header } from '../components';
 import CheckBox from '../components/CheckBox';
 import StarRating from '../components/StarRating';
 import PlacesContext from '../contexts/places-context';
+import logo from '../assets/logo.svg';
+import filterIcon from '../assets/filterIcon.svg';
 
 const ratingOptions = [
   { label: '1', value: '1', checked: false },
@@ -50,13 +52,13 @@ export default function HeaderContainer() {
   return (
     <Header>
       <Link to="/">
-        <Header.Logo src={'logo.svg'} />
+        <Header.Logo src={logo} />
       </Link>
       <Header.Title>Find and add restaurants near you.</Header.Title>
       <Filter>
         <Filter.Title>Filter by rating</Filter.Title>
         <Filter.Icon
-          src={'filterIcon.svg'}
+          src={filterIcon}
           onClick={() => setIsOpen((prevState) => !prevState)}
         />
       </Filter>

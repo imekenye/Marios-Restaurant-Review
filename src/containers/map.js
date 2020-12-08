@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Map } from '../components';
+import marker from '../assets/marker.svg';
 
 // google maps
 import {
@@ -61,13 +62,13 @@ export default function MapContainer() {
                       key={idx}
                       onClick={() => {
                         getReviews(restaurant.place_id);
-                        history.push('/reviews');
+                        history.push(`/reviews/${restaurant.place_id}`);
                       }}
                       position={{
                         lat: restaurant.geometry.location.lat,
                         lng: restaurant.geometry.location.lng,
                       }}
-                      icon="marker.svg"
+                      icon={marker}
                     />
                   </>
                 ))}
