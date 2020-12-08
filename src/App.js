@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme/defaultTheme';
 import { GlobalStyle } from './theme/globalStyle';
-import { HeaderContainer, MainContainer } from './containers';
+import { Home, FormReview, Reviews } from './pages';
+// import { HeaderContainer, MainContainer } from './containers';
 
 export default function App() {
   return (
@@ -13,8 +14,25 @@ export default function App() {
       <GlobalStyle />
 
       <Router>
-        <HeaderContainer />
-        <MainContainer />
+        {/* <HeaderContainer />
+        <MainContainer /> */}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(routeProps) => <Home {...routeProps} />}
+          ></Route>
+          <Route
+            exact
+            path="/reviews/:id"
+            render={(routeProps) => <Reviews {...routeProps} />}
+          ></Route>
+          <Route
+            exact
+            path="/reviewform/:id"
+            render={(routeProps) => <FormReview {...routeProps} />}
+          ></Route>
+        </Switch>
       </Router>
     </ThemeProvider>
   );
