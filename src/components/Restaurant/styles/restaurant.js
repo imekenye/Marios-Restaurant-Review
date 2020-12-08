@@ -36,6 +36,7 @@ export const Title = styled.h1`
   color: ${({ theme }) => theme.colors.primary};
   font-smooth: auto;
   cursor: pointer;
+  padding-top: 16px;
 `;
 export const Location = styled.div`
   color: ${({ theme }) => theme.colors.text};

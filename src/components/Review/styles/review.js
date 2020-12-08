@@ -11,6 +11,21 @@ export const Header = styled.div`
   margin-bottom: 36px;
   background: #fcfcfc;
   padding: 30px 76px;
+  .back {
+    svg {
+      margin-right: 8px;
+    }
+    font-family: 'Akkurat';
+    color: lightgray;
+    font-weight: normal;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 16px;
+    &:hover {
+      color: gray;
+    }
+  }
 `;
 export const Button = styled.button`
   width: 96px;
@@ -25,7 +40,7 @@ export const Button = styled.button`
   }
 `;
 export const Body = styled.div`
-  padding-top: 150px;
+  padding-top: 200px;
 `;
 export const Title = styled.h2`
   font-weight: bold;

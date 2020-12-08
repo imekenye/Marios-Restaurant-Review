@@ -7,4 +7,6 @@ export const Container = styled.div`
   align-items: center;
 `;
 export const Logo = styled.img``;
-export const Title = styled.p``;
+export const Title = styled.p`
+  color: gray;
+`;
