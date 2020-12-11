@@ -1,6 +1,6 @@
 import React from 'react';
 import { RestaurantSection } from '../components';
 
-export default function RestaurantContainer({ children }) {
-  return <RestaurantSection>{children}</RestaurantSection>;
+export default function RestaurantContainer({ children, ...rest }) {
+  return <RestaurantSection {...rest}>{children}</RestaurantSection>;
 }
