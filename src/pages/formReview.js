@@ -15,6 +15,11 @@ export default function FormReview({ history, match }) {
   const { reviews, db } = useContext(PlacesContext);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  // handle input state
+  const [firstname, setFirstName] = useState();
+  const [lastname, setLastName] = useState();
+  const [review, setReview] = useState();
+
   const [submit, setSubmit] = useState({
     author_name: '',
     rating: 0,
@@ -30,49 +35,55 @@ export default function FormReview({ history, match }) {
   const onSaveRating = (index) => {
     setRating(index);
   };
-  const handleChange = (e) => {
-    setSubmit({ ...submit, [e.target.name]: e.target.value, rating: rating });
+  const handleReview = (e) => {
+    setSubmit({
+      author_name: `${firstname} ${lastname}`,
+      rating: rating,
+      text: review,
+    });
   };
   const onSubmit = (e) => {
     e.preventDefault();
 
+    e.target[0].value = '';
+    e.target[1].value = '';
+    e.target[2].value = '';
+    // setRating(0);
+    db.collection('reviews')
+      .doc(`${reviews.place_id}`)
+      .update({
+        ...reviews,
+        reviews: [...reviews.reviews, submit],
+      });
     setTimeout(() => {
-      e.target[0].value = '';
-      e.target[1].value = '';
-      e.target[2].value = '';
-      setRating(0);
-      db.collection('reviews')
-        .doc(`${reviews.place_id}`)
-        .update({
-          ...reviews,
-          reviews: [...reviews.reviews, submit],
-        });
-      console.log(e, submit);
+      history.goBack();
     }, 2000);
+    console.log(e, submit);
   };
 
   return (
     <>
-      <HeaderContainer />
+      <HeaderContainer showRating={false} />
       <MainContainer>
-        <MapContainer />
-        <RestaurantContainer>
+        <RestaurantContainer style={{ gridColumn: '1/-1' }}>
           <>
             <span className="back__form" onClick={() => history.goBack()}>
               <MdKeyboardBackspace />
               Back
             </span>
-            <Restaurant.Title>{reviews.name}</Restaurant.Title>
-            <Restaurant.Location>
+            <Restaurant.Title style={{ textAlign: 'center' }}>
+              {reviews.name}
+            </Restaurant.Title>
+            <Restaurant.Location style={{ textAlign: 'center' }}>
               {reviews.formatted_address}
             </Restaurant.Location>
-            <Restaurant.Rating>
+            <Restaurant.Rating style={{ textAlign: 'center' }}>
               <StarRating total={reviews.rating} />
             </Restaurant.Rating>
             {/* <hr /> */}
           </>
 
-          <ReviewForm onSubmit={(event) => onSubmit(event)}>
+          <ReviewForm onSubmit={onSubmit}>
             <ReviewForm.Title>
               What did you think about {reviews.name.replace(/ .*/, '')}?
             </ReviewForm.Title>
@@ -92,25 +103,25 @@ export default function FormReview({ history, match }) {
               })}
             </ReviewForm.Rating>
             <ReviewForm.FirstName
-              value={submit.author_name}
               name="author_name"
               type="text"
               placeholder="Name"
-              onChange={handleChange}
+              onChange={(e) => setFirstName(e.target.value)}
             />
-            {/* <ReviewForm.LastName
-          name="lastname"
-          type="text"
-          placeholder="Last Name"
-          onChange={handleChange}
-        /> */}
+            <ReviewForm.LastName
+              name="lastname"
+              type="text"
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+            />
             <ReviewForm.Review
-              value={submit.text}
               name="text"
               placeholder="Review"
-              onChange={handleChange}
+              onChange={(e) => setReview(e.target.value)}
             ></ReviewForm.Review>
-            <ReviewForm.Button type="submit">Share Review</ReviewForm.Button>
+            <ReviewForm.Button type="submit" onClick={handleReview}>
+              Share Review
+            </ReviewForm.Button>
           </ReviewForm>
         </RestaurantContainer>
       </MainContainer>
