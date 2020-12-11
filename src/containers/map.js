@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Map } from '../components';
 import marker from '../assets/marker.svg';
 
@@ -12,6 +12,7 @@ import {
 import mapStyles from '../mapStyles';
 import PlacesContext from '../contexts/places-context';
 import { Link, useHistory } from 'react-router-dom';
+import PlaceFormContainer from './placeform';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -26,6 +27,10 @@ const options = {
 };
 
 export default function MapContainer() {
+  const [showForm, setShowForm] = useState(false);
+  const [lat, setLat] = useState();
+  const [long, setLong] = useState();
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -38,11 +43,36 @@ export default function MapContainer() {
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
+  const handleMapClick = (e) => {
+    setShowForm(true);
+    setLat(e.latLng.lat());
+    setLong(e.latLng.lng());
+  };
+  console.log(lat, long);
   return (
     <>
+      {showForm && (
+        <>
+          <PlaceFormContainer lat={lat} long={long} />
+          <div
+            className="overlay"
+            onClick={() => setShowForm(false)}
+            style={{
+              position: 'absolute',
+              zIndex: '11',
+              background:
+                'radial-gradient(97.56% 242.6% at 0% 3.08%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);',
+              backdropFilter: 'blur(5px)',
+              width: '100%',
+              height: '100%',
+            }}
+          ></div>
+        </>
+      )}
       <Map>
         {
           <GoogleMap
+            onClick={handleMapClick}
             mapContainerStyle={mapContainerStyle}
             zoom={15}
             center={{
@@ -66,6 +96,7 @@ export default function MapContainer() {
                       }}
                       position={{
                         lat: restaurant.geometry.location.lat,
+
                         lng: restaurant.geometry.location.lng,
                       }}
                       icon={marker}

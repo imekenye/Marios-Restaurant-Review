@@ -8,3 +8,4 @@ export { default as ReviewForm } from './ReviewForm';
 export { default as Filter } from './Filter';
 export { default as FilterInput } from './FilterInput';
 export { default as StreetView } from './StreetView';
+export { default as AddPlaceForm } from './AddPlaceForm';
