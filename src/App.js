@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // theme & global styles
@@ -6,9 +6,11 @@ import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './theme/defaultTheme';
 import { GlobalStyle } from './theme/globalStyle';
 import { Home, FormReview, Reviews } from './pages';
+import PlacesContext from './contexts/places-context';
 // import { HeaderContainer, MainContainer } from './containers';
 
 export default function App() {
+  const { places, getReviews, reviews, filtered } = useContext(PlacesContext);
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
@@ -25,7 +27,7 @@ export default function App() {
           <Route
             exact
             path="/reviews/:id"
-            render={(routeProps) => <Reviews {...routeProps} />}
+            render={(routeProps) => <Reviews places={places} {...routeProps} />}
           ></Route>
           <Route
             exact
