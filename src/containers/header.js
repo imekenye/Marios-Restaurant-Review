@@ -15,7 +15,7 @@ const ratingOptions = [
   { label: '5', value: '5', checked: false },
 ];
 
-export default function HeaderContainer() {
+export default function HeaderContainer({ showRating = true }) {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState(ratingOptions);
   const { places, filterPlaces } = useContext(PlacesContext);
@@ -54,36 +54,44 @@ export default function HeaderContainer() {
       <Link to="/">
         <Header.Logo src={logo} />
       </Link>
-      <Header.Title>Find and add restaurants near you.</Header.Title>
-      <Filter>
-        <Filter.Title>Filter by rating</Filter.Title>
-        <Filter.Icon
-          src={filterIcon}
-          onClick={() => setIsOpen((prevState) => !prevState)}
-        />
-      </Filter>
-      {isOpen && (
-        <FilterInput>
-          {options.map((option, idx) => (
-            <div className="filter__input" key={idx}>
-              <FilterInput.CheckboxLabel>
-                <FilterInput.Checkbox
-                  type="checkbox"
-                  value={option.value}
-                  checked={option.checked}
-                  onChange={(e) => {
-                    handleCheckBox(e, idx, option);
-                    console.log(e);
-                  }}
-                />
-                <CheckBox checked={option.checked} />
-                <span style={{ margin: '0 8px' }}>{option.label}</span>
-                <StarRating total={idx + 1} disable={true} />
-              </FilterInput.CheckboxLabel>
-            </div>
-          ))}
-          <FilterInput.Button onClick={handleFilter}>Filter</FilterInput.Button>
-        </FilterInput>
+      {showRating ? (
+        <>
+          <Header.Title>Find and add restaurants near you.</Header.Title>
+          <Filter>
+            <Filter.Title>Filter by rating</Filter.Title>
+            <Filter.Icon
+              src={filterIcon}
+              onClick={() => setIsOpen((prevState) => !prevState)}
+            />
+          </Filter>
+          {isOpen && (
+            <FilterInput>
+              {options.map((option, idx) => (
+                <div className="filter__input" key={idx}>
+                  <FilterInput.CheckboxLabel>
+                    <FilterInput.Checkbox
+                      type="checkbox"
+                      value={option.value}
+                      checked={option.checked}
+                      onChange={(e) => {
+                        handleCheckBox(e, idx, option);
+                        console.log(e);
+                      }}
+                    />
+                    <CheckBox checked={option.checked} />
+                    <span style={{ margin: '0 8px' }}>{option.label}</span>
+                    <StarRating total={idx + 1} disable={true} />
+                  </FilterInput.CheckboxLabel>
+                </div>
+              ))}
+              <FilterInput.Button onClick={handleFilter}>
+                Filter
+              </FilterInput.Button>
+            </FilterInput>
+          )}
+        </>
+      ) : (
+        ''
       )}
     </Header>
   );

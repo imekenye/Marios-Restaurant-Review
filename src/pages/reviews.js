@@ -22,7 +22,7 @@ export default function Reviews({ history, match, places }) {
 
   return (
     <>
-      <HeaderContainer />
+      <HeaderContainer showRating={false} />
       <MainContainer>
         <StreetView>
           <StreetView.Image src={streetViewUrl} />
