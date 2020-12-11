@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Review, Restaurant } from '../components';
+import { Review, Restaurant, StreetView } from '../components';
 import StarRating from '../components/StarRating';
 import {
   HeaderContainer,
@@ -11,15 +11,22 @@ import {
 import PlacesContext from '../contexts/places-context';
 import { MdKeyboardBackspace } from 'react-icons/md';
 
-export default function Reviews({ history, match }) {
+export default function Reviews({ history, match, places }) {
   const { reviews, getReview } = useContext(PlacesContext);
-  console.log(match.path);
+  const filteredPlace = places.filter(
+    (place) => match.params.id === place.place_id
+  );
+  console.log(filteredPlace[0].geometry.location.lat);
+
+  const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${filteredPlace[0].geometry.location.lat},${filteredPlace[0].geometry.location.lng}&size=456x456&key=${process.env.REACT_APP_STREET_API_KEY}`;
 
   return (
     <>
       <HeaderContainer />
       <MainContainer>
-        <MapContainer />
+        <StreetView>
+          <StreetView.Image src={streetViewUrl} />
+        </StreetView>
         <RestaurantContainer>
           <Review>
             {reviews && (

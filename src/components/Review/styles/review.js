@@ -11,6 +11,7 @@ export const Header = styled.div`
   margin-bottom: 36px;
   background: #fcfcfc;
   padding: 30px 76px;
+
   .back {
     svg {
       margin-right: 8px;
