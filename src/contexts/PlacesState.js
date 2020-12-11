@@ -35,6 +35,7 @@ const PlacesState = ({ children }) => {
     const dbName = 'places';
     const databases = await window.indexedDB.databases();
     const isExisting = databases.map((db) => db.name).includes(dbName);
+
     if (!isExisting) {
       // if indexDB database does not exist....
 
@@ -86,16 +87,13 @@ const PlacesState = ({ children }) => {
       });
     } else {
       // if database is present...
-
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-
         dispatch({
           type: GET_LOCATION,
           payload: { latitude: latitude, longitude: longitude },
         });
       });
-
       const data = await db
         .collection('places')
         .get()
@@ -104,23 +102,22 @@ const PlacesState = ({ children }) => {
         });
       // const placesData = JSON.parse(localStorage.getItem('places'));
       dispatch({ type: GET_DATA, payload: { places: data } });
-
       db.collection('reviews')
         .get()
         .then((review) => {
           dispatch({ type: GET_REVIEWS, payload: { reviews: review } });
         });
     }
-
-    db.collection('places')
-      .get()
-      .then((place) => {
-        dispatch({ type: GET_DATA, payload: { places: place } });
-      });
   };
 
   useEffect(() => {
     fetchApiData();
+
+    // db.collection('places')
+    //   .get()
+    //   .then((place) => {
+    //     dispatch({ type: GET_DATA, payload: { places: place } });
+    //   });
   }, []);
 
   //   filter places
