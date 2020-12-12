@@ -6,7 +6,13 @@ export const Container = styled.div`
 `;
 export const Title = styled.div`
   margin-right: 8px;
+  @media (min-width: 360px) and (max-width: 480px) {
+    display: none;
+  }
 `;
 export const Icon = styled.img`
+  @media (min-width: 360px) and (max-width: 480px) {
+    height: 30px;
+  }
   cursor: pointer;
 `;

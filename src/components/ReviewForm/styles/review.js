@@ -6,11 +6,18 @@ export const Container = styled.form`
   gap: 16px;
   align-items: center;
   height: 100%;
-  padding: 16px 76px;
+  padding: 16px 20%;
+  padding-bottom: 5%;
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding: 0;
+  }
 `;
 export const Title = styled.h2`
   font-size: 18px;
   margin: 0;
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding-top: 20px;
+  }
 `;
 export const Rating = styled.div`
   display: flex;

@@ -5,6 +5,9 @@ export const Container = styled.div`
   align-items: center;
   gap: 16px;
   padding: 16px;
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding: 16px 0;
+  }
 
   .restaurant__image {
     height: 96px;
@@ -37,6 +40,9 @@ export const Title = styled.h1`
   font-smooth: auto;
   cursor: pointer;
   padding-top: 16px;
+  @media (min-width: 360px) and (max-width: 480px) {
+    font-size: 18px;
+  }
 `;
 export const Location = styled.div`
   color: ${({ theme }) => theme.colors.text};

@@ -8,6 +8,9 @@ export const Container = styled.div`
   padding: 76px 76px 0px 76px;
   box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.05);
   overflow: scroll;
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding: 36px 36px 0px 36px;
+  }
 
   span.back__form {
     svg {

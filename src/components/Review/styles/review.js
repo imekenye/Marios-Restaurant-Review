@@ -4,13 +4,19 @@ export const Container = styled.div`
   width: 100%;
 `;
 export const Header = styled.div`
-  position: fixed;
-  top: 106px;
-  left: 50%;
   width: 100%;
   margin-bottom: 36px;
-  background: #fcfcfc;
-  padding: 30px 76px;
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    position: relative;
+    padding: 0;
+  }
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding: 0;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding: 0;
+  }
 
   .back {
     svg {
@@ -41,7 +47,16 @@ export const Button = styled.button`
   }
 `;
 export const Body = styled.div`
-  padding-top: 200px;
+  padding-top: 20px;
+  @media (min-width: 481px) and (max-width: 768px) {
+    padding: 0;
+  }
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding-top: 0px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding-top: 0;
+  }
 `;
 export const Title = styled.h2`
   font-weight: bold;

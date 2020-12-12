@@ -10,6 +10,20 @@ export const Container = styled.form`
   background: #fff;
   padding: 60px;
   filter: drop-shadow(20px 25px 20px rgba(0, 0, 0, 0.1));
+  @media (min-width: 360px) and (max-width: 480px) {
+    padding: 60px 16px 0px 16px;
+    top: 30%;
+    right: 10%;
+    left: 10%;
+    height: 50%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding: 150px 56px 0px 56px;
+    top: 30%;
+    right: 10%;
+    left: 10%;
+    height: 500px;
+  }
 `;
 export const Name = styled.input`
   display: block;
