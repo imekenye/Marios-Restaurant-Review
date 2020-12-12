@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Review, Restaurant, StreetView } from '../components';
 import StarRating from '../components/StarRating';
@@ -8,18 +8,32 @@ import {
   MapContainer,
   RestaurantContainer,
 } from '../containers';
-import PlacesContext from '../contexts/places-context';
+import PlacesContext from '../context/places-context';
 import { MdKeyboardBackspace } from 'react-icons/md';
 
-export default function Reviews({ history, match, places }) {
-  const { reviews, getReview } = useContext(PlacesContext);
+export default function Reviews({ history, match }) {
+  const { db, places, getReview } = useContext(PlacesContext);
+  const [review, setReview] = useState({});
+
   const filteredPlace = places.filter(
     (place) => match.params.id === place.place_id
   );
   console.log(filteredPlace[0].geometry.location.lat);
 
   const streetViewUrl = `https://maps.googleapis.com/maps/api/streetview?location=${filteredPlace[0].geometry.location.lat},${filteredPlace[0].geometry.location.lng}&size=456x456&key=${process.env.REACT_APP_STREET_API_KEY}`;
-
+  const getReviews = (id) => {
+    db.collection('reviews')
+      .doc(id)
+      .get()
+      .then((document) => {
+        setReview(document);
+        // console.log(document);
+      });
+  };
+  useEffect(() => {
+    getReviews(match.params.id);
+  }, []);
+  console.log(review);
   return (
     <>
       <HeaderContainer showRating={false} />
@@ -29,22 +43,22 @@ export default function Reviews({ history, match, places }) {
         </StreetView>
         <RestaurantContainer>
           <Review>
-            {reviews && (
+            {review && (
               <Restaurant.Title>
                 <Review.Header>
                   <span className="back" onClick={() => history.push('/')}>
                     <MdKeyboardBackspace />
                     Back
                   </span>
-                  <Restaurant.Title>{reviews.name}</Restaurant.Title>
+                  <Restaurant.Title>{review.name}</Restaurant.Title>
                   <Restaurant.Location>
-                    {reviews.formatted_address}
+                    {review.formatted_address}
                   </Restaurant.Location>
                   <Restaurant.Rating>
-                    <StarRating total={reviews.rating} />
+                    <StarRating total={review.rating} />
                   </Restaurant.Rating>
                   <Review.Button>
-                    <Link to={`/reviewform/${reviews.place_id}`}>
+                    <Link to={`/reviewform/${review.place_id}`}>
                       Add Review
                     </Link>
                   </Review.Button>
@@ -53,8 +67,8 @@ export default function Reviews({ history, match, places }) {
             )}
 
             <Review.Body>
-              {reviews.reviews ? (
-                reviews.reviews.map((review) => (
+              {review.reviews ? (
+                review.reviews.map((review) => (
                   <>
                     <Review.Title>{review.author_name}</Review.Title>
                     <Review.Rating>
