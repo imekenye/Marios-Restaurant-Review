@@ -10,8 +10,7 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import mapStyles from '../mapStyles';
-import PlacesContext from '../contexts/places-context';
-import { Link, useHistory } from 'react-router-dom';
+import PlacesContext from '../context/places-context';
 import PlaceFormContainer from './placeform';
 
 const libraries = ['places'];
@@ -30,30 +29,36 @@ export default function MapContainer() {
   const [showForm, setShowForm] = useState(false);
   const [lat, setLat] = useState();
   const [long, setLong] = useState();
+  const [showInfoWindow, setShowInfoWindow] = useState(false);
+  const [currentId, setCurrentId] = useState();
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
+  const handleInfoWindow = (id) => {
+    setCurrentId(id);
+    setShowInfoWindow(!showInfoWindow);
+  };
+
   // global context
-  const { places, latitude, longitude, getReviews } = useContext(PlacesContext);
-  const history = useHistory();
+  const { places, latitude, longitude } = useContext(PlacesContext);
 
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
   const handleMapClick = (e) => {
-    setShowForm(true);
     setLat(e.latLng.lat());
     setLong(e.latLng.lng());
+    setShowForm(true);
   };
-  console.log(lat, long);
+
   return (
     <>
       {showForm && (
         <>
-          <PlaceFormContainer lat={lat} long={long} />
+          <PlaceFormContainer lat={lat} long={long} setShowform={setShowForm} />
           <div
             className="overlay"
             onClick={() => setShowForm(false)}
@@ -66,9 +71,10 @@ export default function MapContainer() {
               width: '100%',
               height: '100%',
             }}
-          ></div>
+          />
         </>
       )}
+
       <Map>
         {
           <GoogleMap
@@ -76,23 +82,29 @@ export default function MapContainer() {
             mapContainerStyle={mapContainerStyle}
             zoom={15}
             center={{
-              lat: latitude ? latitude : 51.507351,
-              lng: longitude ? longitude : -0.127758,
+              lat: latitude,
+              lng: longitude,
             }}
             options={options}
           >
-            <Marker position={{ lat: latitude, lng: longitude }} />
+            <Marker
+              position={{
+                lat: latitude,
+                lng: longitude,
+              }}
+            />
 
             {places &&
               places
                 // .slice(0, 6)
                 .map((restaurant, idx) => (
-                  <>
+                  <React.Fragment key={idx}>
                     <Marker
-                      key={idx}
-                      onClick={() => {
-                        getReviews(restaurant.place_id);
-                        history.push(`/reviews/${restaurant.place_id}`);
+                      onClick={(e) => {
+                        console.log(e.latLng.lng());
+                        // getReviews(restaurant.place_id);
+                        // history.push(`/reviews/${restaurant.place_id}`);
+                        handleInfoWindow(idx);
                       }}
                       position={{
                         lat: restaurant.geometry.location.lat,
@@ -101,7 +113,21 @@ export default function MapContainer() {
                       }}
                       icon={marker}
                     />
-                  </>
+                    {currentId === idx && showInfoWindow ? (
+                      <InfoWindow
+                        // onLoad={onLoad}
+                        position={{
+                          lat: restaurant.geometry.location.lat,
+
+                          lng: restaurant.geometry.location.lng,
+                        }}
+                      >
+                        <div>
+                          <p>{restaurant.name}</p>
+                        </div>
+                      </InfoWindow>
+                    ) : null}
+                  </React.Fragment>
                 ))}
           </GoogleMap>
         }

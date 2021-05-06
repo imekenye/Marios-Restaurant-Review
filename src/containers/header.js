@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Filter, FilterInput, Header } from '../components';
 import CheckBox from '../components/CheckBox';
 import StarRating from '../components/StarRating';
-import PlacesContext from '../contexts/places-context';
+import PlacesContext from '../context/places-context';
 import logo from '../assets/logo.svg';
 import filterIcon from '../assets/filterIcon.svg';
 
@@ -15,7 +15,7 @@ const ratingOptions = [
   { label: '5', value: '5', checked: false },
 ];
 
-export default function HeaderContainer({ showRating = true }) {
+export default function HeaderContainer({ showRating = true, setIsFiltered }) {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState(ratingOptions);
   const { places, filterPlaces } = useContext(PlacesContext);
@@ -23,11 +23,8 @@ export default function HeaderContainer({ showRating = true }) {
   const handleCheckBox = (e, idx, option) => {
     const newOptions = [...options];
     newOptions[idx].checked = e.target.checked;
-    console.log(option.checked && e.target.value);
-    // filtered(option.checked && e.target.value);
     setOptions(newOptions);
   };
-  console.log(options);
 
   const handleFilter = () => {
     let selected = [];
@@ -35,16 +32,18 @@ export default function HeaderContainer({ showRating = true }) {
     options.map((option) => {
       return option.checked ? selected.push(parseInt(option.value)) : null;
     });
+    // eslint-disable-next-line array-callback-return
     selected.map((select) => {
       const filtered = places.filter((el) => {
         let floorRating = Math.floor(el.rating);
-        return el.rating == select || floorRating == select;
+        return el.rating === select || floorRating === select;
       });
       filteredResults.push(...filtered);
     });
     // setFilteredPlaces(filteredResults);
     filterPlaces(filteredResults);
     setIsOpen(false);
+    setIsFiltered(true);
     // console.log(filteredResults);
     // console.log(selected);
   };

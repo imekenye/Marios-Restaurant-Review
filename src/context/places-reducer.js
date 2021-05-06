@@ -5,7 +5,7 @@ import {
   GET_REVIEWS,
   GET_LOCATION,
   ERROR,
-} from './places-actions';
+} from "./places-actions";
 
 function placeReducer(state, action) {
   switch (action.type) {
@@ -36,8 +36,9 @@ function placeReducer(state, action) {
       return {
         ...state,
         filtered: action.payload.filtered,
+        places: action.payload.places,
         loading: true,
-        error: '',
+        error: "",
       };
     case ERROR:
       return {

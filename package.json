@@ -18,6 +18,7 @@
     "styled-components": "^5.2.0",
     "styled-system": "^5.1.5",
     "uuid": "^8.3.2",
+    "uuidv4": "^6.2.7",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -43,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "2.2.1"
   }
 }

@@ -1,10 +1,6 @@
-import React, { useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React from "react";
 
-import { MapContainer } from '.';
-import { Main, RestaurantSection } from '../components';
-
-import { Restaurants, Reviews, FormReview, Home } from '../pages';
+import { Main } from "../components";
 
 export default function MainContainer({ children }) {
   return (

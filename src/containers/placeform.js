@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { AddPlaceForm } from '../components';
-import uuidv4 from 'uuid/v4';
-import PlacesContext from '../contexts/places-context';
+import { uuid } from 'uuidv4';
+import PlacesContext from '../context/places-context';
 
-export default function PlaceFormContainer({ lat, long }) {
-  const { db } = useContext(PlacesContext);
+export default function PlaceFormContainer({ lat, long, setShowform }) {
+  const { addPlaceReview } = useContext(PlacesContext);
   let placeInfo = {
     name: '',
     vicinity: '',
@@ -25,30 +25,38 @@ export default function PlaceFormContainer({ lat, long }) {
   const [reviewData, setReviewData] = useState(reviewInfo);
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
-  const [restaurants, setRestaurants] = useState([]);
-
-  const place_id = placeData.place_id;
+  const [restaurants] = useState([]);
 
   const handlePlaceData = async () => {
+    const place_id = uuid;
     setPlaceData({
       name: name,
       vicinity: location,
       geometry: { location: { lat: lat, lng: long } },
-      place_id: uuidv4(),
+      place_id: place_id,
       rating: 0,
     });
-    // setReviewData({
-    //   formatted_address: location,
-    //   name: name,
-    //   reviews: [],
-    //   place_id: place_id,
-    //   rating: 0,
-    // });
+
+    setReviewData({
+      formatted_address: location,
+      name: name,
+      reviews: [],
+      place_id: place_id,
+      rating: 0,
+    });
   };
 
   const onSubmit = (e) => {
-    db.collection('places').add(placeData, placeData.place_id);
-    //   .then(db.collection('reviews').add(reviewData, placeData.place_id));
+    e.preventDefault();
+    addPlaceReview(
+      placeData.place_id,
+      placeData.name,
+      lat,
+      long,
+      placeData.vicinity
+    );
+    setShowform(false);
+    console.log(placeData, reviewData);
   };
   console.log(restaurants);
   return (

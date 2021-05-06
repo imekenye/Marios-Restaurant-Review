@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
 
 export const Container = styled.form`
   display: flex;
@@ -21,6 +21,7 @@ export const Title = styled.h2`
 `;
 export const Rating = styled.div`
   display: flex;
+  flex-direction: column;
 `;
 export const Button = styled.button`
   width: 100%;
